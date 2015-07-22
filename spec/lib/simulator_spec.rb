@@ -1,11 +1,17 @@
 require 'spec_helper'
 require 'simulator'
+require 'Robot'
 
 describe Simulator do
   describe '.new' do
     it 'creates an instance of Simulator' do
       simulator = Simulator.new
       expect(simulator).to be_an_instance_of(Simulator)
+    end
+    it 'assigns and instance of Robot to simulator' do
+      robot = Robot.new
+      simulator = Simulator.new(robot)
+      expect(simulator.robot).to be_an_instance_of(Robot)
     end
   end
 

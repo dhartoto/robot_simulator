@@ -32,7 +32,14 @@ describe Simulator do
     end
 
     context 'when user issue valid command' do
-      it 'sends #receive to robot'
+      before { allow(simulator).to receive(:gets) { 'MOVE' } }
+      
+      it 'sends #receive to robot' do
+        robot = instance_double('robot')
+        command = double('command')
+        expect(robot).to receive(:receive).with(command)
+        simulator.run
+      end
       it 'displays response from robot'
     end
     context 'when user issue invalid command' do

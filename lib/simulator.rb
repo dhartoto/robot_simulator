@@ -1,8 +1,9 @@
 class Simulator
-  attr_reader :display
+  attr_reader :display, :robot
 
-  def initialize
+  def initialize(robot)
     @display = "Welcome to Robot Simulator!"
+    @robot   = robot
   end
 
   def run

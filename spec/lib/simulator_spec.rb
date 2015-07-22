@@ -13,7 +13,7 @@ describe Simulator do
     it 'instruct user to enter a command.' do
       simulator = Simulator.new
       simulator.run
-      msg = "Welcome to Robot Simulator."
+      msg = "Welcome to Robot Simulator!"
       expect(simulator.display).to eq(msg)
     end
     it 'requests user input'

@@ -19,6 +19,7 @@ MOVE
 LEFT
 RIGHT
 REPORT
+EXIT
 ```
 
 - `PLACE` will put the toy robot on the table in position X,Y and facing NORTH, SOUTH, EAST or WEST.

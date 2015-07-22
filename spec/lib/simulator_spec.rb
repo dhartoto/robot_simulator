@@ -5,7 +5,8 @@ require 'Robot'
 describe Simulator do
   describe '.new' do
     it 'creates an instance of Simulator' do
-      simulator = Simulator.new
+      robot = instance_double('robot')
+      simulator = Simulator.new(robot)
       expect(simulator).to be_an_instance_of(Simulator)
     end
     it 'assigns and instance of Robot to simulator' do
@@ -16,7 +17,8 @@ describe Simulator do
   end
 
   describe '#run' do
-    let(:simulator) { Simulator.new }
+    let(:robot)     { instance_double('robot') }
+    let(:simulator) { Simulator.new(robot) }
 
     it 'instruct user to enter a command.' do
       allow(simulator).to receive(:gets) { 'MOVE' }

@@ -9,5 +9,6 @@ class Simulator
   def run
     puts display
     command = gets.chomp
+    robot.receive(command)
   end
 end

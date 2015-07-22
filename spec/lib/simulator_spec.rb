@@ -17,7 +17,7 @@ describe Simulator do
   end
 
   describe '#run' do
-    let(:robot)     { instance_double('robot') }
+    let(:robot)     { instance_double('Robot') }
     let(:simulator) { Simulator.new(robot) }
 
     it 'instruct user to enter a command.' do
@@ -33,11 +33,9 @@ describe Simulator do
 
     context 'when user issue valid command' do
       before { allow(simulator).to receive(:gets) { 'MOVE' } }
-      
+
       it 'sends #receive to robot' do
-        robot = instance_double('robot')
-        command = double('command')
-        expect(robot).to receive(:receive).with(command)
+        expect(robot).to receive(:receive).with('MOVE')
         simulator.run
       end
       it 'displays response from robot'

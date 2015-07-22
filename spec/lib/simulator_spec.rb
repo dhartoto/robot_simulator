@@ -20,6 +20,8 @@ describe Simulator do
     let(:robot)     { instance_double('Robot') }
     let(:simulator) { Simulator.new(robot) }
 
+    before { allow(robot).to receive(:receive).with('MOVE') }
+
     it 'instruct user to enter a command.' do
       allow(simulator).to receive(:gets) { 'MOVE' }
       simulator.run

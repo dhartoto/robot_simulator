@@ -18,7 +18,7 @@ describe Simulator do
       expect(simulator.display).to eq(msg)
     end
     it 'requests user input' do
-      expect(simulator).to receive(:gets)
+      expect(simulator).to receive(:gets) { 'MOVE' }
       simulator.run
     end
 

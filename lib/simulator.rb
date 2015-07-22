@@ -7,5 +7,6 @@ class Simulator
 
   def run
     puts display
+    command = gets.chomp
   end
 end

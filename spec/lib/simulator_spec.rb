@@ -13,6 +13,7 @@ describe Simulator do
     let(:simulator) { Simulator.new }
 
     it 'instruct user to enter a command.' do
+      allow(simulator).to receive(:gets) { 'MOVE' }
       simulator.run
       msg = "Welcome to Robot Simulator!"
       expect(simulator.display).to eq(msg)
@@ -22,11 +23,11 @@ describe Simulator do
       simulator.run
     end
 
-    context 'when user input valid command' do
+    context 'when user issue valid command' do
       it 'sends #receive to robot'
       it 'displays response from robot'
     end
-    context 'when user input invalid command' do
+    context 'when user issue invalid command' do
       it 'does not send #receive to robot'
       it 'displays error message'
     end

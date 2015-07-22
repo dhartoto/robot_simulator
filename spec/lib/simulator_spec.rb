@@ -10,13 +10,17 @@ describe Simulator do
   end
 
   describe '#run' do
+    let(:simulator) { Simulator.new }
+
     it 'instruct user to enter a command.' do
-      simulator = Simulator.new
       simulator.run
       msg = "Welcome to Robot Simulator!"
       expect(simulator.display).to eq(msg)
     end
-    it 'requests user input'
+    it 'requests user input' do
+      expect(simulator).to receive(:gets)
+      simulator.run
+    end
 
     context 'when user input valid command' do
       it 'sends #receive to robot'

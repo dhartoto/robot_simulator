@@ -17,8 +17,12 @@ describe Simulator do
       simulator = Simulator.new(robot)
       expect(simulator.robot).to be_an_instance_of(Robot)
     end
-    it 'assigns welcome message to display' do
-      msg = "Welcome to Robot Simulator!"
+    it 'assigns instructions for issuing command to display' do
+      msg = "Issue the command 'PLACE' along with the board co-ordinates and"\
+        " bearing to position the robot on the board. e.g. 'PLACE 0,1,NORTH'\n"\
+        "You can also instruct the robot to carry out an action with the following"\
+        " commands: 'MOVE', 'LEFT', 'RIGHT, 'REPORT'\n"\
+        "Issue the command 'EXIT' to quit the simulator."
       simulator = Simulator.new(robot)
       expect(simulator.display).to eq(msg)
     end

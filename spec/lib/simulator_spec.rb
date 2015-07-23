@@ -36,9 +36,10 @@ describe Simulator do
     it 'requests user input' do
       command = OpenStruct.new(valid?: true)
       message = OpenStruct.new(message: 'ok')
-      allow(Command).to receive(:build).and_return(command)
+      allow(Command).to receive(:build).and_return(command, 'EXIT')
       allow(robot).to receive(:receive).and_return(message)
-      expect(simulator).to receive(:gets) { 'MOVE' }
+      expect(simulator).to receive(:gets){ 'MOVE'}
+      expect(simulator).to receive(:gets){ 'EXIT'}
       simulator.run
     end
 
@@ -47,7 +48,7 @@ describe Simulator do
       let(:command)   { OpenStruct.new(valid?: true) }
 
       before do
-        allow(Command).to receive(:build).and_return(command)
+        allow(Command).to receive(:build).and_return(command, 'EXIT')
         allow(robot).to receive(:receive).and_return(message)
         allow(simulator).to receive(:gets) { 'MOVE' }
       end
@@ -65,7 +66,7 @@ describe Simulator do
       let(:command) { OpenStruct.new(valid?: false, error_message: 'error') }
       before do
         allow(simulator).to receive(:gets) { 'MOVE' }
-        allow(Command).to receive(:build).and_return(command)
+        allow(Command).to receive(:build).and_return(command, 'EXIT')
       end
 
       it 'does not send #receive to robot' do
@@ -78,21 +79,18 @@ describe Simulator do
       end
     end
     context 'when user issue EXIT command' do
-      let(:command) { 'EXIT' }
-
       before do
-        allow(Command).to receive(:build).and_return(command)
+        allow(Command).to receive(:build).and_return('EXIT')
         allow(simulator).to receive(:gets) { 'EXIT' }
       end
 
-      it 'exits the application with message' do
-        resp = lambda{ simulator.run }
-        msg = "Exiting simulator...Goodbye!"
-        expect(resp).to raise_error(SystemExit, msg)
+      it 'exits the application' do
+        expect(simulator).to receive(:gets).once
+        simulator.run
       end
       it 'does not send #receive to robot' do
         expect(robot).not_to receive(:receive)
-        lambda{ simulator.run }
+        simulator.run
       end
     end
   end

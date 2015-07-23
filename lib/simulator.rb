@@ -8,12 +8,14 @@ class Simulator
   end
 
   def run
-    puts display
-    command = Command.build(gets.chomp)
-    abort("Exiting simulator...Goodbye!") if command == 'EXIT'
-    resp = robot.receive(command) if command.valid?
-    self.display = command.error_message || resp.message
-    puts display
+    loop do
+      puts display
+      command = Command.build(gets.chomp)
+      break if command == 'EXIT'
+      resp = robot.receive(command) if command.valid?
+      self.display = command.error_message || resp.message
+      puts display
+    end
   end
 
   private

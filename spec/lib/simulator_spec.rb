@@ -52,7 +52,12 @@ describe Simulator do
       end
     end
     context 'when user issue invalid command' do
-      it 'does not send #receive to robot'
+      before { allow(simulator).to receive(:gets) { 'MOVE' } }
+
+      it 'does not send #receive to robot' do
+        expect(robot).not_to receive(:receive)
+        simulator.run
+      end
       it 'displays error message'
     end
     context 'when user input EXIT' do

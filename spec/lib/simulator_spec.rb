@@ -73,10 +73,21 @@ describe Simulator do
         expect(simulator.display).to eq('error')
       end
     end
-    context 'when user input EXIT' do
+    context 'when user issue EXIT command' do
+      let(:command) { 'EXIT' }
+
+      before do
+        allow(Command).to receive(:build).and_return(command)
+        allow(simulator).to receive(:gets) { 'EXIT' }
+      end
+
+      it 'exits the application with message' do
+        resp = lambda{ simulator.run }
+        msg = "Exiting simulator...Goodbye!"
+        expect(resp).to raise_error(SystemExit, msg)
+      end
       it 'does not send #receive to robot'
-      it 'displays exit message'
-      it 'exits the application'
+
     end
   end
 end

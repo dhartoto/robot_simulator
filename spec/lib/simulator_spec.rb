@@ -5,8 +5,9 @@ require 'Robot'
 
 describe Simulator do
   describe '.new' do
+    let(:robot) { instance_double('Robot') }
+
     it 'creates an instance of Simulator' do
-      robot = instance_double('robot')
       simulator = Simulator.new(robot)
       expect(simulator).to be_an_instance_of(Simulator)
     end
@@ -15,35 +16,37 @@ describe Simulator do
       simulator = Simulator.new(robot)
       expect(simulator.robot).to be_an_instance_of(Robot)
     end
+    it 'assigns welcome message to display' do
+      msg = "Welcome to Robot Simulator!"
+      simulator = Simulator.new(robot)
+      expect(simulator.display).to eq(msg)
+    end
   end
 
   describe '#run' do
     let(:robot)     { instance_double('Robot') }
     let(:simulator) { Simulator.new(robot) }
 
-    before { allow(robot).to receive(:receive).with('MOVE') }
-
-    it 'instruct user to enter a command.' do
-      allow(simulator).to receive(:gets) { 'MOVE' }
-      simulator.run
-      msg = "Welcome to Robot Simulator!"
-      expect(simulator.display).to eq(msg)
-    end
     it 'requests user input' do
+      message = OpenStruct.new(message: 'ok')
+      allow(robot).to receive(:receive).and_return(message)
       expect(simulator).to receive(:gets) { 'MOVE' }
       simulator.run
     end
 
     context 'when user issue valid command' do
-      before { allow(simulator).to receive(:gets) { 'MOVE' } }
+      let(:message) { OpenStruct.new(message: 'ok') }
+
+      before do
+        allow(robot).to receive(:receive).and_return(message)
+        allow(simulator).to receive(:gets) { 'MOVE' }
+      end
 
       it 'sends #receive to robot' do
         expect(robot).to receive(:receive).with('MOVE')
         simulator.run
       end
       it 'displays response from robot' do
-        message = OpenStruct.new(message: 'ok')
-        allow(robot).to receive(:receive).and_return(message)
         simulator.run
         expect(simulator.display).to eq('ok')
       end

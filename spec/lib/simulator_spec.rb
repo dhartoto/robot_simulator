@@ -58,7 +58,7 @@ describe Simulator do
       end
     end
     context 'when user issue invalid command' do
-      let(:command) { OpenStruct.new(valid?: false) }
+      let(:command) { OpenStruct.new(valid?: false, error_message: 'error') }
       before do
         allow(simulator).to receive(:gets) { 'MOVE' }
         allow(Command).to receive(:build).and_return(command)
@@ -68,7 +68,10 @@ describe Simulator do
         expect(robot).not_to receive(:receive)
         simulator.run
       end
-      it 'displays error message'
+      it 'displays error message' do
+        simulator.run
+        expect(simulator.display).to eq('error')
+      end
     end
     context 'when user input EXIT' do
       it 'does not send #receive to robot'

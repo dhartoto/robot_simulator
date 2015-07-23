@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'ostruct'
 require 'simulator'
 require 'Robot'
+require 'Command'
 
 describe Simulator do
   describe '.new' do
@@ -52,7 +53,11 @@ describe Simulator do
       end
     end
     context 'when user issue invalid command' do
-      before { allow(simulator).to receive(:gets) { 'MOVE' } }
+      let(:command) { OpenStruct.new(valid?: false) }
+      before do
+        allow(simulator).to receive(:gets) { 'MOVE' }
+        allow(Command).to receive(:build).and_return(command)
+      end
 
       it 'does not send #receive to robot' do
         expect(robot).not_to receive(:receive)

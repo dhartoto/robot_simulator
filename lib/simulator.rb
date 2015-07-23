@@ -9,9 +9,9 @@ class Simulator
 
   def run
     puts display
-    command = gets.chomp
-    resp = robot.receive(command)
-    self.display = resp.message
+    command = Command.build(gets.chomp)
+    resp = robot.receive(command) if command.valid?
+    self.display = resp.message if command.valid?
     puts display
   end
 end

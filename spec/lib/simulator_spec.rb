@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ostruct'
 require 'simulator'
 require 'Robot'
 
@@ -40,7 +41,12 @@ describe Simulator do
         expect(robot).to receive(:receive).with('MOVE')
         simulator.run
       end
-      it 'displays response from robot'
+      it 'displays response from robot' do
+        message = OpenStruct.new(message: 'ok')
+        allow(robot).to receive(:receive).and_return(message)
+        simulator.run
+        expect(simulator.display).to eq('ok')
+      end
     end
     context 'when user issue invalid command' do
       it 'does not send #receive to robot'

@@ -11,7 +11,7 @@ class Simulator
     puts display
     command = Command.build(gets.chomp)
     resp = robot.receive(command) if command.valid?
-    self.display = resp.message if command.valid?
+    self.display = command.error_message || resp.message
     puts display
   end
 end

@@ -28,8 +28,11 @@ describe Simulator do
     let(:robot)     { instance_double('Robot') }
     let(:simulator) { Simulator.new(robot) }
 
+
     it 'requests user input' do
+      command = OpenStruct.new(valid?: true)
       message = OpenStruct.new(message: 'ok')
+      allow(Command).to receive(:build).and_return(command)
       allow(robot).to receive(:receive).and_return(message)
       expect(simulator).to receive(:gets) { 'MOVE' }
       simulator.run
@@ -37,14 +40,16 @@ describe Simulator do
 
     context 'when user issue valid command' do
       let(:message) { OpenStruct.new(message: 'ok') }
+      let(:command)   { OpenStruct.new(valid?: true) }
 
       before do
+        allow(Command).to receive(:build).and_return(command)
         allow(robot).to receive(:receive).and_return(message)
         allow(simulator).to receive(:gets) { 'MOVE' }
       end
 
       it 'sends #receive to robot' do
-        expect(robot).to receive(:receive).with('MOVE')
+        expect(robot).to receive(:receive)
         simulator.run
       end
       it 'displays response from robot' do

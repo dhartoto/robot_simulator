@@ -1,5 +1,6 @@
 class Simulator
-  attr_reader :display, :robot
+  attr_reader   :robot
+  attr_accessor :display
 
   def initialize(robot)
     @display = "Welcome to Robot Simulator!"
@@ -9,6 +10,8 @@ class Simulator
   def run
     puts display
     command = gets.chomp
-    robot.receive(command)
+    resp = robot.receive(command)
+    self.display = resp.message
+    puts display
   end
 end

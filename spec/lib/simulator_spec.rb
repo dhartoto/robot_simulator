@@ -86,8 +86,10 @@ describe Simulator do
         msg = "Exiting simulator...Goodbye!"
         expect(resp).to raise_error(SystemExit, msg)
       end
-      it 'does not send #receive to robot'
-
+      it 'does not send #receive to robot' do
+        expect(robot).not_to receive(:receive)
+        lambda{ simulator.run }
+      end
     end
   end
 end
